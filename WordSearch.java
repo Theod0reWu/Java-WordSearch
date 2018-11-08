@@ -28,7 +28,8 @@ public class WordSearch{
     	String out = "";
     	for (int i = 0; i < data.length; i++){
     		for (int e = 0; e < data[i].length; e++){
-    			out += data[i][e] + " ";
+    			out += data[i][e];
+    			if (e != data[i].length - 1) {out += " ";}
     		}
     		out += "\n";
     	}
