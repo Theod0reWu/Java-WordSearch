@@ -49,7 +49,7 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-    	if (row < 0 || col < 0 || data[row].length - col < word.length()) return false;
+    	if (row < 0 || col < 0 || row >= data.length||data[row].length - col < word.length()) return false;
     	char[][] old = copy();
 
     	for (int i = col, e = 0; e < word.length(); i++, e++){
@@ -95,11 +95,13 @@ public class WordSearch{
      *and the board is NOT modified.
      */
     public boolean addWordVertical(String word,int row, int col){
-    	if (data.length - row < word.length() || row < 0 || col < 0) return false;
+    	if (row < 0 || col < 0|| col >= data[0].length||data.length - row < word.length()) return false;
     	char[][] old = copy();
 
     	for (int i = row, e = 0; e < word.length(); i++, e++){
-    		if (data[i][col] == ('_')) {data[i][col] = word.charAt(e);}
+    		if (data[i][col] == ('_')) {
+ 				data[i][col] = word.charAt(e);
+    		}
     		if (data[i][col] != word.charAt(e)) { 
     			data = old;
     			return false;}
@@ -118,7 +120,7 @@ public class WordSearch{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordDiagonal(String word,int row, int col){
-    	if (row < 0 || col < 0 || data[row].length - col < word.length() || data.length - row < word.length()) return false;
+    	if (row < 0 || col < 0 || row >= data.length|| col >= data[0].length|| data[row].length - col < word.length() || data.length - row < word.length()) return false;
     	char[][] old = copy();
 
     	for (int r = row, c = col, e = 0; e < word.length(); r++, c++, e++){

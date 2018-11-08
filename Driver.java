@@ -47,7 +47,10 @@ public class Driver{
 		}
 
 		System.out.println(one);
-		System.out.println(one.addWordDiagonal("look",3,4));
+		System.out.println(one.addWordDiagonal("look",4,4));
+		System.out.println(one);
+
+		System.out.println(one.addWordVertical("hi",1000,0));
 		System.out.println(one);
 	}
 }
