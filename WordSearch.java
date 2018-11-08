@@ -49,7 +49,7 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-    	if (data[row].length - col < word.length()) return false;
+    	if (data[row].length - col < word.length() || row < 0 || col < 0) return false;
     	char[][] old = copy();
 
     	for (int i = col, e = 0; e < word.length(); i++, e++){
@@ -61,7 +61,9 @@ public class WordSearch{
     	return true;
     }
 
-    /* *@return a copy of the data[][] field 
+    /* *returns a copy of data[][]
+    *
+    *@return a copy of the data[][] field 
     */
     private char[][] copy(){
     	char[][] old = new char[data.length][data[0].length];
@@ -71,6 +73,14 @@ public class WordSearch{
     		}
     	}
     	return old;
+    }
+
+    public static String reverse(String s){
+    	String r = "";
+    	for (int i = s.length() - 1; i >-1; i--){
+    		r+=s.charAt(i);
+    	}
+    	return r;
     }
 
    /**Attempts to add a given word to the specified position of the WordGrid.
@@ -85,12 +95,35 @@ public class WordSearch{
      *and the board is NOT modified.
      */
     public boolean addWordVertical(String word,int row, int col){
-    	if (data.length - row < word.length()) return false;
+    	if (data.length - row < word.length() || row < 0 || col < 0) return false;
     	char[][] old = copy();
 
     	for (int i = row, e = 0; e < word.length(); i++, e++){
     		if (data[i][col] == ('_')) {data[i][col] = word.charAt(e);}
     		if (data[i][col] != word.charAt(e)) { 
+    			data = old;
+    			return false;}
+    	}
+    	return true;
+    }
+
+    /**Attempts to add a given word to the specified position of the WordGrid.
+     *The word is added from top left to bottom right, must fit on the WordGrid,
+     *and must have a corresponding letter to match any letters that it overlaps.
+     *
+     *@param word is any text to be added to the word grid.
+     *@param row is the vertical locaiton of where you want the word to start.
+     *@param col is the horizontal location of where you want the word to start.
+     *@return true when the word is added successfully. When the word doesn't fit,
+     *or there are overlapping letters that do not match, then false is returned.
+     */
+    public boolean addWordDiagonal(String word,int row, int col){
+    	if (data[row].length - col < word.length() || data.length - row < word.length() || row < 0 || col < 0) return false;
+    	char[][] old = copy();
+
+    	for (int r = row, c = col, e = 0; e < word.length(); r++, c++, e++){
+    		if (data[r][c] == ('_')) {data[r][c] = word.charAt(e);}
+    		if (data[r][c] != word.charAt(e)) { 
     			data = old;
     			return false;}
     	}

@@ -44,6 +44,10 @@ public class Driver{
 		}else{
 			System.out.println("uh Oh you modified the WordSearch: ");
 			System.out.println(one);
-		}		
+		}
+
+		System.out.println(one);
+		System.out.println(one.addWordDiagonal("look",3,4));
+		System.out.println(one);
 	}
 }
