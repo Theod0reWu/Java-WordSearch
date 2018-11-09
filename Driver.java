@@ -52,5 +52,10 @@ public class Driver{
 
 		System.out.println(one.addWordVertical("hi",1000,0));
 		System.out.println(one);
+		/*
+  		for (int i = 0; i < 200; i++){
+  		System.out.println(i+": " + (char) i);
+  		}
+  		*/
 	}
 }
