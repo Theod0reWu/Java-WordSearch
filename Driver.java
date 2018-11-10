@@ -5,6 +5,7 @@ public class Driver{
 		System.out.println("Should print out a 10 X 10 array of underscores: ");
 		System.out.println(one);
 		System.out.println("*******************************");
+		/*
 		System.out.println("attempting to add 'hello' horizontally at (1,4)");
 		System.out.println("should print True: ");
 		System.out.println(one.addWordHorizontal("hello",1,4));
@@ -52,14 +53,12 @@ public class Driver{
 
 		System.out.println(one.addWordVertical("hi",1000,0));
 		System.out.println(one);
-		/*
   		for (int i = 0; i < 200; i++){
   		System.out.println(i+": " + (char) i);
   		}
   		*/
 
   		WordSearch two = new WordSearch(5,5);
-  		two.addWordHorizontal("hellos",0,0);
   		System.out.println(two);
 
   		System.out.println(two.addWord(4,0,"hello",-1,1));
