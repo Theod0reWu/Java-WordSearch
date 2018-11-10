@@ -26,6 +26,6 @@ public class WordSearchDriver{
   	System.out.println("seed: "+seed);
   	Random rand = new Random(seed);
   	//rand.setSeed(seed);
-  	System.out.println(rand.nextInt(10));
+  	System.out.println((char)(rand.nextInt(26) + 65));
   }
 }

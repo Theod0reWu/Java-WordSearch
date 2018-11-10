@@ -57,6 +57,13 @@ public class Driver{
   		System.out.println(i+": " + (char) i);
   		}
   		*/
+
+  		WordSearch two = new WordSearch(5,5);
+  		two.addWordHorizontal("hellos",0,0);
+  		System.out.println(two);
+
+  		System.out.println(two.addWord(4,0,"hello",-1,1));
+  		System.out.println(two);
   }
 
 }

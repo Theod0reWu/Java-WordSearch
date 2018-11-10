@@ -131,4 +131,18 @@ public class WordSearch{
     	}
     	return true;
     }
+    public boolean addWord( int row, int col, String word, int rin, int cin){
+    	if (row < 0 || col < 0 || (rin == 0 && cin == 0)) return false;
+    	if (row >= data.length|| col >= data[0].length) return false;
+    	if (data[row].length - (col*cin) < word.length() || data.length - (row*rin) < word.length()) return false;
+    	char[][] old = copy();
+
+    	for (int r = row, c = col, e = 0; e < word.length(); r+=rin, c+=cin, e++){
+    		if (data[r][c] == ('_')) {data[r][c] = word.charAt(e);}
+    		if (data[r][c] != word.charAt(e)) { 
+    			data = old;
+    			return false;}
+    	}
+    	return true;
+    }
 }
