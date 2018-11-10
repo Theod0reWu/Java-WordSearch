@@ -3,10 +3,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashMap;
 public class WordSearch{
     private char[][]data;
     private long seed;
     private ArrayList<String> words;
+    private ArrayList<String> addedWords;
     private Random rand;
 
     public WordSearch(int rows,int cols, String filename){
@@ -15,7 +17,9 @@ public class WordSearch{
     	seed = System.currentTimeMillis();
     	rand = new Random(seed);
     	words = new ArrayList<>();
+    	addedWords = new ArrayList<>();
     	setWords(filename);
+    	addAllWords();
     }
     public WordSearch(int rows,int cols, String filename, long randSeed){
     	data = new char[rows][cols];
@@ -23,6 +27,7 @@ public class WordSearch{
     	seed = randSeed;
     	rand = new Random(seed);
     	words = new ArrayList<>();
+    	addedWords = new ArrayList<>();
     	setWords(filename);
     }
     public long getSeed(){
@@ -37,19 +42,22 @@ public class WordSearch{
     			if (word.charAt(word.length() - 1) == ','){
     				word = word.substring(0,word.length()-1);
     			}
-    			words.add(word);
+    			if (word.length() <= data.length || word.length() <= data[0] .length){
+    				// if words are too long they are denied
+    				words.add(word);
+    			}
     		}
     	}catch (FileNotFoundException e){
     		System.out.println("File not found: " + filename);
     		System.exit(1);
     	}
     }
-    private String getWords(){
+    private String getAddedWords(){
     	String s = ("Words: ");
-	    for (int i = 0; i < words.size() - 1; i++){
-	      s+=(words.get(i) + ", ");
+	    for (int i = 0; i < addedWords.size() - 1; i++){
+	      s+=(addedWords.get(i) + ", ");
 	    }
-	    if (words.size() > 0) s+=(words.get(words.size() - 1));
+	    if (addedWords.size() > 0) s+=(addedWords.get(addedWords.size() - 1));
 	    return s;
     }
     private void clear(){
@@ -69,7 +77,7 @@ public class WordSearch{
     		}
     		out += "|\n";
     	}
-    	out+= getWords();
+    	out+= getAddedWords();
     	return out;
     }
     private char[][] copy(){
@@ -81,7 +89,7 @@ public class WordSearch{
     	}
     	return old;
     }
-    public boolean addWord( int row, int col, String word, int rin, int cin){
+    private boolean addWord( int row, int col, String word, int rin, int cin){
     	if (row < 0 || col < 0 || (rin == 0 && cin == 0)) return false;
     	if (row >= data.length|| col >= data[0].length) return false;
     	if (data[row].length - (col*cin) < word.length() || data.length - (row*rin) < word.length()) return false;
@@ -93,11 +101,30 @@ public class WordSearch{
     			data = old;
     			return false;}
     	}
+    	words.remove(word);
+    	addedWords.add(word);
     	return true;
     }
-
     private boolean addAllWords(){
-    	
+    	for (int w = 0; w < words.size(); w++){
+	    	String rWord = words.get(rand.nextInt(words.size()));
+	    	int l = addedWords.size();
+	    	int rXin = 0, rYin = 0;
+	    	while (rX == 0 & rY == 0){
+		    		rXin = rand.nextInt(3) - 2;
+		    		rYin = rand.nextInt(3) - 2;
+		    	}
+		    HashMap<Integer, Integer> used = new HashMap<>();
+	    	while (addedWords.size() == l){
+		    	int rX = rand.nextInt(data.length); 
+		    	int rY = rand.nextInt(data[0].length);
+		    	while (used.containsKey(rX) && used.get(rX) == rY){
+		    		int rX = rand.nextInt(data.length); 
+		    		int rY = rand.nextInt(data[0].length);
+		    	}
+		    	
+			}
+	    }
     	return true;
     }
 }
