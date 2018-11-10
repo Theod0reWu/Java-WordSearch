@@ -1,6 +1,6 @@
 public class Driver{
 	public static void main(String[] args){
-		WordSearch one = new WordSearch(10,10);
+		WordSearch one = new WordSearch(10,10, "words.txt");
 		System.out.println("Initializing a 11 by 11, WordSearch");
 		System.out.println("Should print out a 10 X 10 array of underscores: ");
 		System.out.println(one);
@@ -58,11 +58,12 @@ public class Driver{
   		}
   		*/
 
-  		WordSearch two = new WordSearch(5,5);
+  		WordSearch two = new WordSearch(5,5,"words.txt");
   		System.out.println(two);
 
   		System.out.println(two.addWord(4,0,"hello",-1,1));
   		System.out.println(two);
+
   }
 
 }

@@ -1,9 +1,56 @@
+import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.ArrayList;
 public class WordSearch{
     private char[][]data;
+    private long seed;
+    private ArrayList<String> words;
+    private Random rand;
 
-    public WordSearch(int rows,int cols){
+    public WordSearch(int rows,int cols, String filename){
     	data = new char[rows][cols];
     	clear();
+    	seed = System.currentTimeMillis();
+    	rand = new Random(seed);
+    	words = new ArrayList<>();
+    	setWords(filename);
+    }
+    public WordSearch(int rows,int cols, String filename, long randSeed){
+    	data = new char[rows][cols];
+    	clear();
+    	seed = randSeed;
+    	rand = new Random(seed);
+    	words = new ArrayList<>();
+    	setWords(filename);
+    }
+    public long getSeed(){
+    	return seed;
+    }
+    private void setWords(String filename){
+    	try{
+    		File f = new File(filename);
+    		Scanner in = new Scanner(f);
+    		while (in.hasNext()){
+    			String word = in.next().trim().toUpperCase();
+    			if (word.charAt(word.length() - 1) == ','){
+    				word = word.substring(0,word.length()-1);
+    			}
+    			words.add(word);
+    		}
+    	}catch (FileNotFoundException e){
+    		System.out.println("File not found: " + filename);
+    		System.exit(1);
+    	}
+    }
+    private String getWords(){
+    	String s = ("Words: ");
+	    for (int i = 0; i < words.size() - 1; i++){
+	      s+=(words.get(i) + ", ");
+	    }
+	    if (words.size() > 0) s+=(words.get(words.size() - 1));
+	    return s;
     }
     private void clear(){
     	for (int i = 0; i < data.length; i++){
@@ -22,6 +69,7 @@ public class WordSearch{
     		}
     		out += "|\n";
     	}
+    	out+= getWords();
     	return out;
     }
     private char[][] copy(){
@@ -45,6 +93,11 @@ public class WordSearch{
     			data = old;
     			return false;}
     	}
+    	return true;
+    }
+
+    private boolean addAllWords(){
+    	
     	return true;
     }
 }
