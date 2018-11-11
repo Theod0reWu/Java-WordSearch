@@ -92,37 +92,58 @@ public class WordSearch{
     private boolean addWord( int row, int col, String word, int rin, int cin){
     	if (row < 0 || col < 0 || (rin == 0 && cin == 0)) return false;
     	if (row >= data.length|| col >= data[0].length) return false;
-    	if (data[row].length - (col*cin) < word.length() || data.length - (row*rin) < word.length()) return false;
-    	char[][] old = copy();
-
-    	for (int r = row, c = col, e = 0; e < word.length(); r+=rin, c+=cin, e++){
-    		if (data[r][c] == ('_')) {data[r][c] = word.charAt(e);}
-    		if (data[r][c] != word.charAt(e)) { 
-    			data = old;
+    	if (data[row].length - (col*cin) < word.length()) return false;
+    	if (cin == -1 && col + 1 < word.length()) return false;
+    	if (data.length - (row*rin) < word.length()) return false;
+    	if (rin == -1 && row+1 < word.length()) return false;
+		for (int r = row, c = col, e = 0; e < word.length(); r+=rin, c+=cin, e++){
+    		if (data[r][c] != word.charAt(e) && data[r][c] != '_') { 
     			return false;}
     	}
-    	words.remove(word);
-    	addedWords.add(word);
+    	for (int r = row, c = col, e = 0; e < word.length(); r+=rin, c+=cin, e++){
+    		if (data[r][c] == ('_')) {data[r][c] = word.charAt(e);}
+    	}
+
     	return true;
     }
     private boolean addAllWords(){
-    	for (int w = 0; w < words.size(); w++){
+    	int s = words.size();
+    	for (int w = 0; w < s; w++){
 	    	String rWord = words.get(rand.nextInt(words.size()));
-	    	int l = addedWords.size();
 	    	int rXin = 0, rYin = 0;
-	    	while (rX == 0 & rY == 0){
-		    		rXin = rand.nextInt(3) - 2;
-		    		rYin = rand.nextInt(3) - 2;
+	    	while (rXin == 0 & rYin == 0){
+		    		rXin = rand.nextInt(3) - 1;
+		    		rYin = rand.nextInt(3) - 1;
 		    	}
-		    HashMap<Integer, Integer> used = new HashMap<>();
-	    	while (addedWords.size() == l){
+		    boolean[][] ps = new boolean[data.length][data[0].length];
+		    int wl = rWord.length();
+		    int rt, yt;
+	        if (rXin != -1) {rt = ps.length - (wl);}
+	        else {rt = (wl-1);}
+	        if (rYin != -1) {yt = ps[0].length - (wl);}
+	        else {yt = (wl-1);}
+	        int totalP = ps.length * ps[0].length;
+		    for (int x = 0; x < ps.length; x++){
+		    	for (int y = 0; y < ps[0].length; y++){
+		    		if (x*rXin > rt*rXin || y*rYin > yt*rYin) {
+		    			ps[x][y] = true;
+		    			--totalP;
+		    		}
+		    	}
+		    }
+	    	for (int i = 0; i < totalP; i++){
 		    	int rX = rand.nextInt(data.length); 
 		    	int rY = rand.nextInt(data[0].length);
-		    	while (used.containsKey(rX) && used.get(rX) == rY){
-		    		int rX = rand.nextInt(data.length); 
-		    		int rY = rand.nextInt(data[0].length);
+		    	while (ps[rX][rY]){
+		    		rX = rand.nextInt(data.length); 
+		    		rY = rand.nextInt(data[0].length);
 		    	}
-		    	
+		    	ps[rX][rY] = true;
+		    	if (addWord(rX,rY,rWord,rXin, rYin)){
+		    		words.remove(rWord);
+    				addedWords.add(rWord);
+    				i = totalP;
+		    	}
 			}
 	    }
     	return true;
