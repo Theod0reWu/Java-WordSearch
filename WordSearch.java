@@ -72,7 +72,7 @@ public class WordSearch{
     		}
     		out += "|\n";
     	}
-    	out+= getAddedWords() + " (" + addedWords.size() + " words)";
+    	out+= getAddedWords() + " (" + addedWords.size() + " words)" + " (seed: " + seed + ")";
     	return out;
     }
     private char[][] copy(){
@@ -151,4 +151,27 @@ public class WordSearch{
     	}
     	return true;
 	}
+	public static void main(String[] args){
+	  	try {
+	  		int rows = Integer.parseInt(args[0]);
+	  		int cols = Integer.parseInt(args[1]);
+	  		String file = args[2];
+	  		WordSearch ws;
+	  		if (args.length > 3){
+	  			ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]));
+	  		}
+	  		else{
+	  		ws = new WordSearch(rows,cols,file);
+	  		}
+	  		System.out.println(ws);
+	  	}
+	  	catch (Exception e){
+	  		e.printStackTrace();
+	  		System.out.println("Wrong Input!!! \n************************\nFirst enter the number of rows you would like in your word search.");
+	  		System.out.println("Next the number of columns, then the .txt file containing the words yo wish to find.");
+	  		System.out.println("If you have a seed enter it after the column.");
+	  		System.out.println("Each input should be seperated by spaces");
+	  		System.exit(1);
+	  	}
+  }
 }
