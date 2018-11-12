@@ -166,11 +166,10 @@ public class WordSearch{
 	  		System.out.println(ws);
 	  	}
 	  	catch (Exception e){
-	  		e.printStackTrace();
+	  		//e.printStackTrace();
 	  		System.out.println("Wrong Input!!! \n************************\nFirst enter the number of rows you would like in your word search.");
 	  		System.out.println("Next the number of columns, then the .txt file containing the words yo wish to find.");
-	  		System.out.println("If you have a seed enter it after the column.");
-	  		System.out.println("Each input should be seperated by spaces");
+	  		System.out.println("If you have a seed enter it after the column. Each input should be seperated by spaces");
 	  		System.exit(1);
 	  	}
   }
