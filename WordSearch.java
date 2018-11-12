@@ -12,14 +12,7 @@ public class WordSearch{
     private Random rand;
 
     public WordSearch(int rows,int cols, String filename){
-    	data = new char[rows][cols];
-    	clear();
-    	seed = System.currentTimeMillis();
-    	rand = new Random(seed);
-    	words = new ArrayList<>();
-    	addedWords = new ArrayList<>();
-    	setWords(filename);
-    	addAllWords();
+    	this(rows, cols, filename, System.currentTimeMillis());
     }
     public WordSearch(int rows,int cols, String filename, long randSeed){
     	data = new char[rows][cols];
@@ -29,6 +22,8 @@ public class WordSearch{
     	words = new ArrayList<>();
     	addedWords = new ArrayList<>();
     	setWords(filename);
+    	addAllWords();
+    	fillIn();
     }
     public long getSeed(){
     	return seed;
@@ -77,7 +72,7 @@ public class WordSearch{
     		}
     		out += "|\n";
     	}
-    	out+= getAddedWords();
+    	out+= getAddedWords() + " (" + addedWords.size() + " words)";
     	return out;
     }
     private char[][] copy(){
@@ -148,4 +143,12 @@ public class WordSearch{
 	    }
     	return true;
     }
+    private boolean fillIn(){
+    	for(int x = 0; x < data.length; x++){
+    		for (int y = 0; y < data[0].length; y++){
+    			if (data[x][y] == '_') data[x][y] = (char) (rand.nextInt(26) + 65);
+    		}
+    	}
+    	return true;
+	}
 }

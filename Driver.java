@@ -12,7 +12,7 @@ public class Driver{
     	return out;
     }
 	public static void main(String[] args){
-		WordSearch one = new WordSearch(20,20, "words.txt");
+		WordSearch one = new WordSearch(24,24, "words.txt");
 		System.out.println("Initializing a 11 by 11, WordSearch");
 		System.out.println("Should print out a 10 X 10 array of underscores: ");
 		System.out.println(one);
