@@ -1,28 +1,27 @@
 public class Driver{
-	public static String toString(boolean[][] data){
-    	String out = "";
-    	for (int i = 0; i < data.length; i++){
-    		out += "|";
-    		for (int e = 0; e < data[i].length; e++){
-    			out += data[i][e];
-    			if (e != data[i].length - 1) {out += " ";}
-    		}
-    		out += "|\n";
-    	}
-    	return out;
-    }
 	public static void main(String[] args){
-		WordSearch one = new WordSearch(24,24, "words.txt");
-		System.out.println("Initializing a 11 by 11, WordSearch");
-		System.out.println("Should print out a 10 X 10 array of underscores: ");
-		System.out.println(one);
-		System.out.println("*******************************");
-		
-  		WordSearch two = new WordSearch(5,5,"words.txt");
-  		System.out.println(two);
-
-  		//System.out.println(two.addWord(4,0,"hello",-1,1));
-  		//System.out.println(two);
+		try {
+	  		int rows = Integer.parseInt(args[0]);
+	  		int cols = Integer.parseInt(args[1]);
+	  		String file = args[2];
+	  		WordSearch ws;
+	  		if (args.length == 4){
+	  			ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]));
+	  		}
+			else if (args.length == 5){
+				ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]),args[4].equals("key"))
+	  		else{
+	  		ws = new WordSearch(rows,cols,file);
+	  		}
+	  		System.out.println(ws);
+	  	}
+	  	catch (Exception e){
+	  		//e.printStackTrace();
+	  		System.out.println("Wrong Input!!! \n************************\nFirst enter the number of rows you would like in your word search.");
+	  		System.out.println("Next the number of columns, then the .txt file containing the words yo wish to find.");
+	  		System.out.println("If you have a seed enter it after the column. Each input should be seperated by spaces");
+	  		System.exit(1);
+	  	}
 
   }
 }

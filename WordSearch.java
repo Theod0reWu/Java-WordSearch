@@ -14,7 +14,10 @@ public class WordSearch{
     public WordSearch(int rows,int cols, String filename){
     	this(rows, cols, filename, System.currentTimeMillis());
     }
-    public WordSearch(int rows,int cols, String filename, long randSeed){
+    public Wordsearch(int rows,int cols, String filename, long randSeed){
+	this(rows, cols, filename, randSeed, false);
+    }
+    public WordSearch(int rows,int cols, String filename, long randSeed, boolean key){
     	data = new char[rows][cols];
     	clear();
     	seed = randSeed;
@@ -23,7 +26,7 @@ public class WordSearch{
     	addedWords = new ArrayList<>();
     	setWords(filename);
     	addAllWords();
-    	fillIn();
+    	if (!key) fillIn();
     }
     public long getSeed(){
     	return seed;
