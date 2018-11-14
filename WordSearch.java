@@ -12,10 +12,10 @@ public class WordSearch{
     private Random rand;
 
     public WordSearch(int rows,int cols, String filename){
-    	this(rows, cols, filename, System.currentTimeMillis());
+    	this(rows, cols, filename, (long) (Math.random() * 1000000000));
     }
-    public Wordsearch(int rows,int cols, String filename, long randSeed){
-	this(rows, cols, filename, randSeed, false);
+    public WordSearch(int rows,int cols, String filename, long randSeed){
+		this(rows, cols, filename, randSeed, false);
     }
     public WordSearch(int rows,int cols, String filename, long randSeed, boolean key){
     	data = new char[rows][cols];
@@ -143,6 +143,7 @@ public class WordSearch{
     				i = totalP;
 		    	}
 			}
+			words.remove(rWord);
 	    }
     	return true;
     }
@@ -160,9 +161,12 @@ public class WordSearch{
 	  		int cols = Integer.parseInt(args[1]);
 	  		String file = args[2];
 	  		WordSearch ws;
-	  		if (args.length > 3){
+	  		if (args.length == 4){
 	  			ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]));
 	  		}
+			else if (args.length == 5){
+				ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]),args[4].equals("key"));
+			}
 	  		else{
 	  		ws = new WordSearch(rows,cols,file);
 	  		}

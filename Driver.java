@@ -9,7 +9,8 @@ public class Driver{
 	  			ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]));
 	  		}
 			else if (args.length == 5){
-				ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]),args[4].equals("key"))
+				ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]),args[4].equals("key"));
+			}
 	  		else{
 	  		ws = new WordSearch(rows,cols,file);
 	  		}
