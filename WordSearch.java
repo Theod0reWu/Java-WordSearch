@@ -18,8 +18,7 @@ public class WordSearch{
 		this(rows, cols, filename, randSeed, false);
     }
     public WordSearch(int rows,int cols, String filename, long randSeed, boolean key){
-    	data = new char[rows][cols];
-    	clear();
+    	data = new char[rows][cols]; clear();
     	seed = randSeed;
     	rand = new Random(seed);
     	words = new ArrayList<>();
@@ -70,7 +69,8 @@ public class WordSearch{
     	for (int i = 0; i < data.length; i++){
     		out += "|";
     		for (int e = 0; e < data[i].length; e++){
-    			out += data[i][e];
+    			if (data[i][e] != '_') {out += data[i][e];}
+			else {out += " ";}
     			if (e != data[i].length - 1) {out += " ";}
     		}
     		out += "|\n";
@@ -164,7 +164,7 @@ public class WordSearch{
 	  		if (args.length == 4){
 	  			ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]));
 	  		}
-			else if (args.length == 5){
+			else if (args.length >= 5){
 				ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]),args[4].equals("key"));
 			}
 	  		else{
@@ -174,9 +174,9 @@ public class WordSearch{
 	  	}
 	  	catch (Exception e){
 	  		//e.printStackTrace();
-	  		System.out.println("Wrong Input!!! \n************************\nFirst enter the number of rows you would like in your word search.");
-	  		System.out.println("Next the number of columns, then the .txt file containing the words yo wish to find.");
-	  		System.out.println("If you have a seed enter it after the column. Each input should be seperated by spaces");
+	  		System.out.println("Wrong Input!!! \n************************\nFirst enter  a valid number of rows you would like in your word search.");
+	  		System.out.println("Next a valid number of columns, and then an existing .txt file containing the words you wish to find.");
+	  		System.out.println("If you have a valid seed enter it after the column. if you wish to see the answers type \"key\" last. Each input should be seperated by spaces");
 	  		System.exit(1);
 	  	}
   }
