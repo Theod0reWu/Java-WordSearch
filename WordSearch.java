@@ -9,7 +9,7 @@ public class WordSearch{
     private ArrayList<String> words;
     private ArrayList<String> addedWords;
     private Random rand;
-    public WordSearch(int rows,int cols, String filename, long randSeed, boolean key){
+    public WordSearch(int rows,int cols, String filename, long randSeed, boolean key) throws FileNotFoundException{
     	data = new char[rows][cols]; clear();
     	seed = randSeed;
     	rand = new Random(seed);
@@ -19,8 +19,7 @@ public class WordSearch{
     	addAllWords();
     	if (!key) fillIn();
     }
-    private void setWords(String filename){
-    	try{
+    private void setWords(String filename) throws FileNotFoundException{
     		File f = new File(filename);
     		Scanner in = new Scanner(f);
     		while (in.hasNext()){
@@ -32,10 +31,6 @@ public class WordSearch{
     				words.add(word);
     			}
     		}
-    	}catch (FileNotFoundException e){
-    		System.out.println("File not found: " + filename);
-    		System.exit(1);
-    	}
     }
     private String getAddedWords(){
     	String s = ("Words: ");
