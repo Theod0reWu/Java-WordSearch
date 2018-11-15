@@ -87,7 +87,6 @@ public class WordSearch{
     private boolean addAllWords(){
     	int s = words.size();
     	for (int w = 0; w < s; w++){
-    		System.out.println(words.size() + ":" + s + ":" + w);
 	    	String rWord = words.get(rand.nextInt(words.size()));
 	    	int rXin = 0, rYin = 0;
 	    	while (rXin == 0 & rYin == 0){
