@@ -10,13 +10,6 @@ public class WordSearch{
     private ArrayList<String> words;
     private ArrayList<String> addedWords;
     private Random rand;
-
-    public WordSearch(int rows,int cols, String filename){
-    	this(rows, cols, filename, (long) (Math.random() * 1000000000));
-    }
-    public WordSearch(int rows,int cols, String filename, long randSeed){
-		this(rows, cols, filename, randSeed, false);
-    }
     public WordSearch(int rows,int cols, String filename, long randSeed, boolean key){
     	data = new char[rows][cols]; clear();
     	seed = randSeed;
@@ -27,9 +20,6 @@ public class WordSearch{
     	addAllWords();
     	if (!key) fillIn();
     }
-    public long getSeed(){
-    	return seed;
-    }
     private void setWords(String filename){
     	try{
     		File f = new File(filename);
@@ -39,8 +29,7 @@ public class WordSearch{
     			if (word.charAt(word.length() - 1) == ','){
     				word = word.substring(0,word.length()-1);
     			}
-    			if (word.length() <= data.length || word.length() <= data[0] .length){
-    				// if words are too long they are denied
+    			if (word.length() <= data.length || word.length() <= data[0] .length){// if words are too long they are denied
     				words.add(word);
     			}
     		}
@@ -78,15 +67,6 @@ public class WordSearch{
     	out+= getAddedWords() + " (" + addedWords.size() + " words)" + " (seed: " + seed + ")";
     	return out;
     }
-    private char[][] copy(){
-    	char[][] old = new char[data.length][data[0].length];
-    	for (int i = 0; i < data.length; i++){
-    		for (int e = 0; e < data[i].length; e++){
-    			old[i][e] = data[i][e];
-    		}
-    	}
-    	return old;
-    }
     private boolean addWord( int row, int col, String word, int rin, int cin){
     	if (row < 0 || col < 0 || (rin == 0 && cin == 0)) return false;
     	if (row >= data.length|| col >= data[0].length) return false;
@@ -107,6 +87,7 @@ public class WordSearch{
     private boolean addAllWords(){
     	int s = words.size();
     	for (int w = 0; w < s; w++){
+    		System.out.println(words.size() + ":" + s + ":" + w);
 	    	String rWord = words.get(rand.nextInt(words.size()));
 	    	int rXin = 0, rYin = 0;
 	    	while (rXin == 0 & rYin == 0){
@@ -142,8 +123,8 @@ public class WordSearch{
     				addedWords.add(rWord);
     				i = totalP;
 		    	}
+		    	if (i == totalP - 1) {words.remove(rWord);}
 			}
-			words.remove(rWord);
 	    }
     	return true;
     }
@@ -160,23 +141,19 @@ public class WordSearch{
 	  		int rows = Integer.parseInt(args[0]);
 	  		int cols = Integer.parseInt(args[1]);
 	  		String file = args[2];
+	  		long s = (long) (Math.random() * 10000);
+	  		boolean k = false;
 	  		WordSearch ws;
-	  		if (args.length == 4){
-	  			ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]));
-	  		}
-			else if (args.length >= 5){
-				ws = new WordSearch(rows,cols,file,Long.parseLong(args[3]),args[4].equals("key"));
-			}
-	  		else{
-	  		ws = new WordSearch(rows,cols,file);
-	  		}
+	  		if (args.length == 4){s = Long.parseLong(args[3]);}
+	  		if (s < 0 || s > 10000) {throw new IllegalArgumentException();}
+			if (args.length >= 5){k = args[4].equals("key");}
+	  		ws = new WordSearch(rows,cols,file,s,k);
 	  		System.out.println(ws);
 	  	}
 	  	catch (Exception e){
-	  		//e.printStackTrace();
 	  		System.out.println("Wrong Input!!! \n************************\nFirst enter  a valid number of rows you would like in your word search.");
 	  		System.out.println("Next a valid number of columns, and then an existing .txt file containing the words you wish to find.");
-	  		System.out.println("If you have a valid seed enter it after the column. if you wish to see the answers type \"key\" last. Each input should be seperated by spaces");
+	  		System.out.println("If you have a valid seed (in the range 0 to 10000) enter it after the column. if you wish to see the answers type \"key\" last. Each input should be seperated by spaces");
 	  		System.exit(1);
 	  	}
   }
