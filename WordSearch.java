@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.HashMap;
 public class WordSearch{
     private char[][]data;
     private long seed;
@@ -68,12 +67,6 @@ public class WordSearch{
     	return out;
     }
     private boolean addWord( int row, int col, String word, int rin, int cin){
-    	if (row < 0 || col < 0 || (rin == 0 && cin == 0)) return false;
-    	if (row >= data.length|| col >= data[0].length) return false;
-    	if (data[row].length - (col*cin) < word.length()) return false;
-    	if (cin == -1 && col + 1 < word.length()) return false;
-    	if (data.length - (row*rin) < word.length()) return false;
-    	if (rin == -1 && row+1 < word.length()) return false;
 		for (int r = row, c = col, e = 0; e < word.length(); r+=rin, c+=cin, e++){
     		if (data[r][c] != word.charAt(e) && data[r][c] != '_') { 
     			return false;}
@@ -96,14 +89,16 @@ public class WordSearch{
 		    boolean[][] ps = new boolean[data.length][data[0].length];
 		    int wl = rWord.length();
 		    int rt, yt;
-	        if (rXin != -1) {rt = ps.length - (wl);}
-	        else {rt = (wl-1);}
-	        if (rYin != -1) {yt = ps[0].length - (wl);}
-	        else {yt = (wl-1);}
+	        if (rXin != -1) {rt = ps.length - (wl);}else {rt = (wl-1);}
+	        if (rYin != -1) {yt = ps[0].length - (wl);}else {yt = (wl-1);}
 	        int totalP = ps.length * ps[0].length;
 		    for (int x = 0; x < ps.length; x++){
 		    	for (int y = 0; y < ps[0].length; y++){
 		    		if (x*rXin > rt*rXin || y*rYin > yt*rYin) {
+		    			ps[x][y] = true;
+		    			--totalP;
+		    		}
+		    		if ((data[x][y] != rWord.charAt(0) && data[x][y] != '_') && !ps[x][y]) {
 		    			ps[x][y] = true;
 		    			--totalP;
 		    		}
