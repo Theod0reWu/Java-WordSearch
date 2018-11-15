@@ -143,7 +143,7 @@ public class WordSearch{
 	  		long s = (long) (Math.random() * 10000);
 	  		boolean k = false;
 	  		WordSearch ws;
-	  		if (args.length == 4){s = Long.parseLong(args[3]);}
+	  		if (args.length >= 4){s = Long.parseLong(args[3]);}
 	  		if (s < 0 || s > 10000) {throw new IllegalArgumentException();}
 			if (args.length >= 5){k = args[4].equals("key");}
 	  		ws = new WordSearch(rows,cols,file,s,k);
